@@ -10,6 +10,10 @@ from msrest.authentication import CognitiveServicesCredentials
 
 # Other stuff
 import json
+import random
+
+# Declare constants
+SEARCH_TERM = 'witch face'
 
 # Set up Twython
 t = Twython(
@@ -21,9 +25,21 @@ t = Twython(
 # Set up Bing API
 b = ImageSearchAPI(CognitiveServicesCredentials(settings.bing_key_one))
 
-# Test out image search
-res = b.images.search(query='witch')
-first = res.value[0]
-print("Total number of images: {}".format(len(res.value)))
-print("First image thumbnail url: {}".format(first.thumbnail_url))
-print("First image content url: {}".format(first.content_url))
+# Search recent tweets for spooky content
+
+
+
+
+# Grab an image from Bing API
+def getImage():
+    # Fetch results of search
+    s = b.images.search(SEARCH_TERM)
+
+    # Pick a random result 
+    pic = s.value[random.randint(1,len(s.value))]
+
+    # Return the thumbnail path
+    return pic.thumbnail_url
+
+# Do the stuff
+print(getImage())

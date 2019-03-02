@@ -2,6 +2,7 @@
 deploy.sh
 creds.json
 settings.py
+mcgrath-server-key.pem
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

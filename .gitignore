@@ -1,6 +1,7 @@
 # Manually added exclusions
 deploy.sh
 creds.json
+settings.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

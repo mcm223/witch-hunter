@@ -1,3 +1,6 @@
+# Settings
+from settings import settings
+
 # Twitter API
 import twython
 
@@ -5,4 +8,3 @@ import twython
 from azure.cognitiveservices.search.imagesearch import ImageSearchAPI
 from msrest.authentication import CognitiveServicesCredentials
 
-print("Hello world")

@@ -26,9 +26,30 @@ t = Twython(
 b = ImageSearchAPI(CognitiveServicesCredentials(settings.bing_key_one))
 
 # Search recent tweets for spooky content
+def witchHunt():
+    # Get user's timeline
+    tl =  t.get_user_timeline(
+            screen_name='realDonaldTrump',
+            include_rts='true',
+            count='5',
+            tweet_mode='extended')
 
-
-
+    # WITCH HUNT
+    for tweet in tl:
+        # If it is a retweet, use the original untruncated text
+        if 'retweeted_status' in tweet.keys():
+            tweet["full_text"] = tweet["retweeted_status"]["full_text"]
+        text = tweet["full_text"]
+        text = text.lower()
+        if text.find("witch") == -1:
+            continue
+        else:
+            print("Found one!")
+            respondToTweet(tweet)
+            break # Only respond to one tweet to prevent spamming
+        
+def respondToTweet(tweet):
+    print(tweet["full_text"])
 
 # Grab an image from Bing API
 def getImage():
@@ -42,4 +63,4 @@ def getImage():
     return pic.thumbnail_url
 
 # Do the stuff
-print(getImage())
+witchHunt()

@@ -1,5 +1,6 @@
-# Settings
+# Local classes
 from settings import settings
+from content import content
 
 # Twitter API
 from twython import Twython
@@ -59,11 +60,16 @@ def witchHunt():
         # If all the criteria match, then we've found a witch!
         else:
             print("Found one!")
-            respondToTweet(tweet)
+            quoteTweet(tweet)
             break # Only respond to one tweet to prevent spamming
         
-def respondToTweet(tweet):
+def replyToTweet(tweet):
     print(tweet["full_text"])
+
+def quoteTweet(tweet):
+    # Create permalink to quoted tweet
+    link = 'https://twitter.com/i/web/status/' + tweet['id_str']
+    print(link)
 
 # Grab an image from Bing API
 def getImage():
@@ -71,7 +77,7 @@ def getImage():
     s = b.images.search(SEARCH_TERM)
 
     # Pick a random result 
-    pic = s.value[random.randint(1,len(s.value))]
+    pic = s.value[random.randint(0,len(s.value))]
 
     # Return the thumbnail path
     return pic.thumbnail_url

@@ -67,9 +67,21 @@ def replyToTweet(tweet):
     print(tweet["full_text"])
 
 def quoteTweet(tweet):
-    # Create permalink to quoted tweet
-    link = 'https://twitter.com/i/web/status/' + tweet['id_str']
-    print(link)
+    # Create permalink so I can quote the tweet
+    link = 'https://twitter.com/' + tweet['user']['screen_name'] + '/status/' + tweet['id_str']
+    print("Link to quoted tweet: " + link)
+
+    # Fetch a random phrase for the tweet itself
+    tweet_text = content.statuses[random.randint(0,len(content.statuses)-1)]
+    print("The tweet text is: " + tweet_text)
+
+    # Send the tweet
+    t.update_status(
+            status=tweet_text,
+            attachment_url=link,
+            tweet_mode='extended')
+
+    print('Tweet sent!')
 
 # Grab an image from Bing API
 def getImage():

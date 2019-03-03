@@ -11,9 +11,13 @@ from msrest.authentication import CognitiveServicesCredentials
 # Other stuff
 import json
 import random
+from datetime import datetime
+from datetime import timezone
+from datetime import timedelta
 
 # Declare constants
 SEARCH_TERM = 'witch face'
+TIME_WINDOW = 24
 
 # Set up Twython
 t = Twython(
@@ -31,18 +35,28 @@ def witchHunt():
     tl =  t.get_user_timeline(
             screen_name='realDonaldTrump',
             include_rts='true',
-            count='5',
+            count='20',
             tweet_mode='extended')
 
-    # WITCH HUNT
+    # HUNT FOR WITCHES
     for tweet in tl:
         # If it is a retweet, use the original untruncated text
         if 'retweeted_status' in tweet.keys():
             tweet["full_text"] = tweet["retweeted_status"]["full_text"]
-        text = tweet["full_text"]
-        text = text.lower()
+        
+        # Process the text
+        text = tweet["full_text"].lower()
+
+        # Log the tweet time
+        time = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S %z %Y')
+
+        # First check if the tweet mentions witch
         if text.find("witch") == -1:
             continue
+        # Then enforce an hour window so I don't respond to the same tweet twice
+        if (datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW)) > time:
+            continue
+        # If all the criteria match, then we've found a witch!
         else:
             print("Found one!")
             respondToTweet(tweet)

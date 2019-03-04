@@ -64,7 +64,7 @@ def witchHunt():
             replyToTweet(tweet)
             break # Only respond to one tweet to prevent spamming
         
-def replyToTweet(tweet):
+def replyToTweet(orig_tweet):
     # Get a random image binary from Bing
     img = getImage()
 
@@ -79,6 +79,7 @@ def replyToTweet(tweet):
     t.update_status(
             status=tweet_text,
             media_ids=media['media_id'],
+            in_reply_to_status_id=orig_tweet['id'],
             tweet_mode='extended' )
 
     print('Tweet sent!')

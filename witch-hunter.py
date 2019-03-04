@@ -76,7 +76,7 @@ def replyToTweet(tweet):
     print(tweet_text)
 
     # Update status with image
-    t.update_status_with_media(
+    t.update_status(
             status=tweet_text,
             media_ids=media['media_id'],
             tweet_mode='extended' )

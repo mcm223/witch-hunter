@@ -16,4 +16,19 @@ class content:
             "Hey @MichaelCohen212, could you help Donald find his witches? He seems very concerned about them 🙏"
             ]
 
+    search_terms = [
+            "Michael Cohen",
+            "Roger Stone",
+            "Paul Manafort",
+            "Witch",
+            "Witch Face",
+            "Witch on broomstick",
+            "Witch from Snow White",
+            "Bewitched tv",
+            "Hocus Pocus",
+            "Disney Witch",
+            "Addams Family Morticia",
+            "Buffy evil willow"
+            ]
+
 

@@ -12,12 +12,13 @@ from msrest.authentication import CognitiveServicesCredentials
 # Other stuff
 import json
 import random
+import requests
+from io import BytesIO
 from datetime import datetime
 from datetime import timezone
 from datetime import timedelta
 
 # Declare constants
-SEARCH_TERM = 'witch face'
 TIME_WINDOW = 24
 
 # Set up Twython
@@ -60,11 +61,27 @@ def witchHunt():
         # If all the criteria match, then we've found a witch!
         else:
             print("Found one!")
-            quoteTweet(tweet)
+            replyToTweet(tweet)
             break # Only respond to one tweet to prevent spamming
         
 def replyToTweet(tweet):
-    print(tweet["full_text"])
+    # Get a random image binary from Bing
+    img = getImage()
+
+    # Get the media id from Twitter for the image
+    #media = t.upload_media(media=img)
+
+    # Get the tweet content
+    tweet_text = content.responses[random.randint(0,len(content.responses)-1)]
+    print(tweet_text)
+
+    # Update status with image
+    t.update_status_with_media(
+            status=tweet_text,
+            media_ids=media['media_id'],
+            tweet_mode='extended' )
+
+    print('Tweet sent!')
 
 def quoteTweet(tweet):
     # Create permalink so I can quote the tweet
@@ -82,17 +99,25 @@ def quoteTweet(tweet):
             tweet_mode='extended')
 
     print('Tweet sent!')
-
-# Grab an image from Bing API
+    
+# Grab an image from Bing API and return the object in binary form
 def getImage():
     # Fetch results of search
-    s = b.images.search(SEARCH_TERM)
+    s = b.images.search(
+            query=content.search_terms[random.randint(0,len(content.search_terms)-1)],
+            safeSearch='Strict')
 
     # Pick a random result 
-    pic = s.value[random.randint(0,len(s.value))]
+    pic = s.value[random.randint(0,len(s.value))-1]
+    print(pic.thumbnail_url)
 
-    # Return the thumbnail path
-    return pic.thumbnail_url
+    # Download the thumbnail image and convert to binary
+    res = requests.get(pic.thumbnail_url)
+    res.raise_for_status()
+    bi = BytesIO(res.content)
+
+    # Return the image binary
+    return bi
 
 # Do the stuff
 witchHunt()

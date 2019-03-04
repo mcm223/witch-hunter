@@ -61,7 +61,11 @@ def witchHunt():
         # If all the criteria match, then we've found a witch!
         else:
             print("Found one!")
-            replyToTweet(tweet)
+            # Randomly choose to either quote tweet or reply
+            if random.randint(0,1):
+                replyToTweet(tweet)
+            else:
+                quoteTweet(tweet)
             break # Only respond to one tweet to prevent spamming
         
 def replyToTweet(orig_tweet):

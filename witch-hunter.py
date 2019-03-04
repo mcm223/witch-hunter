@@ -69,7 +69,7 @@ def replyToTweet(tweet):
     img = getImage()
 
     # Get the media id from Twitter for the image
-    #media = t.upload_media(media=img)
+    media = t.upload_media(media=img)
 
     # Get the tweet content
     tweet_text = content.responses[random.randint(0,len(content.responses)-1)]

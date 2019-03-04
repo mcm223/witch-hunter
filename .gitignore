@@ -1,8 +1,8 @@
 # Manually added exclusions
 deploy.sh
-creds.json
 settings.py
 server-key.pem
+runlog.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

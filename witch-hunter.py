@@ -19,7 +19,7 @@ from datetime import timezone
 from datetime import timedelta
 
 # Declare constants
-TIME_WINDOW = 24
+TIME_WINDOW = 1
 
 # Set up Twython
 t = Twython(

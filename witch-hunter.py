@@ -19,7 +19,7 @@ from datetime import timezone
 from datetime import timedelta
 
 # Declare constants
-TIME_WINDOW = 1
+TIME_WINDOW = 60
 
 # Set up Twython
 t = Twython(
@@ -54,7 +54,7 @@ def witchHunt():
         if (text.find("Witch ") == -1 and text.find(" witch ") == -1):
             continue
         # Then enforce an hour window so I don't respond to the same tweet twice
-        if (datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW)) > time:
+        if (datetime.now(timezone.utc) - timedelta(minutes=TIME_WINDOW)) > time:
             continue
         # If all the criteria match, then we've found a witch!
         else:

@@ -37,7 +37,7 @@ def witchHunt():
     tl =  t.get_user_timeline(
             screen_name='realDonaldTrump',
             include_rts='true',
-            count='20',
+            count='50',
             tweet_mode='extended')
 
     # HUNT FOR WITCHES
@@ -45,15 +45,13 @@ def witchHunt():
         # If it is a retweet, use the original untruncated text
         if 'retweeted_status' in tweet.keys():
             tweet["full_text"] = tweet["retweeted_status"]["full_text"]
-        
-        # Process the text
-        text = tweet["full_text"].lower()
+        text = tweet["full_text"]
 
         # Log the tweet time
         time = datetime.strptime(tweet["created_at"], '%a %b %d %H:%M:%S %z %Y')
 
         # First check if the tweet mentions witch
-        if text.find("witch") == -1:
+        if (text.find("Witch ") == -1 and text.find(" witch ") == -1):
             continue
         # Then enforce an hour window so I don't respond to the same tweet twice
         if (datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW)) > time:
@@ -63,8 +61,10 @@ def witchHunt():
             print("Found one!")
             # Randomly choose to either quote tweet or reply
             if random.randint(0,1):
+                print("reply: " + text)
                 replyToTweet(tweet)
             else:
+                print("quote: " + text)
                 quoteTweet(tweet)
             break # Only respond to one tweet to prevent spamming
         
